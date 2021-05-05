@@ -14,6 +14,7 @@ class ThirdActivity : AppCompatActivity() {
         val binding = ActivityThirdBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         val recyclerView = binding.recycler
         val items = mutableListOf<RowModel>(RowModel("Hi, my name is Syuzanna", "20/10/2029"))
 
