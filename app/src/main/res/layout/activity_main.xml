@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#BAF1EDFF"
     tools:context=".MainActivity">
 
     <TextView
@@ -15,25 +16,30 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="30dp"
         android:layout_marginTop="120dp"
+        android:textColor="#011B35"
         android:textSize="35sp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/text_txt"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="140dp"
         android:layout_marginTop="130dp"
-        android:text="New note"/>
+        android:text="New note"
+        android:textColor="@color/white"
+        android:background="@drawable/button_design"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/notes_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/add_btn"
         app:layout_constraintStart_toStartOf="@id/add_btn"
         android:layout_marginTop="30dp"
-        android:text="My notes"/>
+        android:text="My notes"
+        android:textColor="@color/white"
+        android:background="@drawable/button_design"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
