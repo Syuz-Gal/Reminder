@@ -5,12 +5,17 @@ import android.app.PendingIntent.getActivity
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.provider.AlarmClock
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.syuzanna.reminder.databinding.ActivitySecondBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.math.min
-const val KEY_DATE = "date"
+
 class SecondActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
      var day = 0
      var month = 0
@@ -70,7 +75,11 @@ class SecondActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, 
         savedHour = hourOfDay
         savedMinute = minute
 
-      date_txt = "$savedDay/${savedMonth+1}/$savedYear"
+        date_txt = "$savedDay/${savedMonth+1}/$savedYear"
         time_txt = "$savedHour:$savedMinute"
+        GlobalScope.launch(Dispatchers.IO) {
+            val userDao = UserDb.getInstance(this@SecondActivity).userDao()
+          userDao.addUser(UserModel(0, edit.text.toString(), date_txt,time_txt))
+            }
+        }
     }
-}
