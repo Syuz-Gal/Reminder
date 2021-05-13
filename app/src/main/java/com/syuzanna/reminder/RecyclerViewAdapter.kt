@@ -1,6 +1,7 @@
 package com.syuzanna.reminder
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,13 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
+const val KEY_NOTE = "note"
+const val KEY_DATE = "date"
 class RecyclerViewAdapter(val context: Context, val items: MutableList<RowModel>): RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
 
@@ -27,7 +33,6 @@ class RecyclerViewAdapter(val context: Context, val items: MutableList<RowModel>
         val row_model = items.get(position)
         holder.noteTxt.text = row_model.note
         holder.dateTxt.text = row_model.date
-
     }
 
     class MyViewHolder(view: View): RecyclerView.ViewHolder(view){

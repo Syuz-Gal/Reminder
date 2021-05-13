@@ -1,13 +1,16 @@
 package com.syuzanna.reminder
 
-import android.app.DatePickerDialog
+import android.app.*
 import android.app.PendingIntent.getActivity
-import android.app.TimePickerDialog
+import android.content.Context
+import android.content.Context.ALARM_SERVICE
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.provider.AlarmClock
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.AlarmManagerCompat
 import com.syuzanna.reminder.databinding.ActivitySecondBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -80,6 +83,32 @@ class SecondActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, 
         GlobalScope.launch(Dispatchers.IO) {
             val userDao = UserDb.getInstance(this@SecondActivity).userDao()
           userDao.addUser(UserModel(0, edit.text.toString(), date_txt,time_txt))
+
+            withContext(Dispatchers.Main){
+                val intent = Intent(this@SecondActivity, ThirdActivity::class.java)
+                startActivity(intent)
+
+                val intent1 = Intent(this@SecondActivity, ReminderBroadcast::class.java)
+                val pendingIntent = PendingIntent.getBroadcast(this@SecondActivity,0,intent1,0)
+                val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                val time: Long = System.currentTimeMillis()
+                val time1: Long = 10000
+                alarmManager.set(AlarmManager.RTC_WAKEUP, time + time1, pendingIntent)
             }
         }
+    }
+
+    private fun createNotificationChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val name = "ReminderChannel"
+            val description = "Channel for Reminder"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("channelid", name, importance);
+            channel.description = description
+
+            val notificationManager: NotificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
     }
